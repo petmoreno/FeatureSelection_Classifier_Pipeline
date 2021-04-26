@@ -6,6 +6,8 @@ Created on Fri Jun 26 06:49:37 2020
 """
 import pandas as pd
 import numpy as np
+import time
+
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 from sklearn.feature_selection import chi2
@@ -207,10 +209,10 @@ def feat_sel_Ridge(X,y):
 #Wrapper transformer for Backward Elimination feature selection
 class Backward_Elimination (BaseEstimator, TransformerMixin):
     def __init__(self):
-        print('\n>>>>>>>>Calling init() from Backward_Elimination')
+        print('\n',time.ctime(),'>>>>>>>>Calling init() from Backward_Elimination')
         
     def fit(self,X,y=None):
-        print('\n>>>>>>>>Calling fit() from Backward_Elimination')
+        print('\n',time.ctime(),'>>>>>>>>Calling fit() from Backward_Elimination')
         cols = list(X.columns)
         pmax = 1
         while (len(cols)>0):
@@ -229,23 +231,23 @@ class Backward_Elimination (BaseEstimator, TransformerMixin):
         return self
     
     def transform(self, X):
-        print('\n>>>>>>>>Calling transform() from Backward_Elimination')
+        print('\n',time.ctime(),'>>>>>>>>Calling transform() from Backward_Elimination')
         X_pruned=X[self.selected_features_BE]
         return X_pruned
     
 #Wrapper transformer for Backward Elimination feature selection
 class LassoCV_FeatSel(BaseEstimator, TransformerMixin):
     def __init__(self):
-        print('\n>>>>>>>>Calling init() from LassoCV_FeatSel')
+        print('\n',time.ctime(),'>>>>>>>>Calling init() from LassoCV_FeatSel')
         self.reg=LassoCV()
     
     def fit(self,X,y=None):
-        print('\n>>>>>>>>Calling fit() from LassoCV_FeatSel')
+        print('\n',time.ctime(),'>>>>>>>>Calling fit() from LassoCV_FeatSel')
         self.reg.fit(X,y)
         return self
         
     def transform(self,X):
-        print('\n>>>>>>>>Calling transform() from LassoCV_FeatSel')
+        print('\n',time.ctime(),'>>>>>>>>Calling transform() from LassoCV_FeatSel')
         coef = pd.Series(self.reg.coef_, index = X.columns)
         feat_sel=coef!=0        
         X_pruned=X[feat_sel.index[feat_sel]]
@@ -254,16 +256,16 @@ class LassoCV_FeatSel(BaseEstimator, TransformerMixin):
 #Wrapper transformer for Backward Elimination feature selection
 class RidgeCV_FeatSel(BaseEstimator, TransformerMixin):
     def __init__(self):
-        print('\n>>>>>>>>Calling init() from RidgeCV_FeatSel')
+        print('\n',time.ctime(),'>>>>>>>>Calling init() from RidgeCV_FeatSel')
         self.reg=RidgeCV()
         
     def fit(self,X,y=None):
-        print('\n>>>>>>>>Calling fit() from RidgeCV_FeatSel')
+        print('\n',time.ctime(),'>>>>>>>>Calling fit() from RidgeCV_FeatSel')
         self.reg.fit(X,y)
         return self
         
     def transform(self,X):
-        print('\n>>>>>>>>Calling transform() from RidgeCV_FeatSel')
+        print('\n',time.ctime(),'>>>>>>>>Calling transform() from RidgeCV_FeatSel')
         coef = pd.Series(reg.coef_, index = X.columns)
         feat_sel=coef>=0
         X_pruned=X[feat_sel.index[feat_sel]]        
@@ -283,7 +285,7 @@ class Feature_Selector(BaseEstimator, TransformerMixin):
     
     #def __init__(self,y_train,strategy='wrapper_RFECV',k_out_features=5, rfe_estimator='LogisticRegression'):       
     def __init__(self,strategy='wrapper_RFECV',k_out_features=5, rfe_estimator='LogisticRegression'):
-        print('\n>>>>>>>>Calling init() from Feature_Selector')
+        print('\n',time.ctime(),'>>>>>>>>Calling init() from Feature_Selector')
         
         #self.y_train=y_train
         self.strategy=strategy
@@ -324,7 +326,7 @@ class Feature_Selector(BaseEstimator, TransformerMixin):
         
         
     def fit(self,X,y=None):
-        print('\n>>>>>>>>Calling fit() from Feature_Selector')
+        print('\n',time.ctime(),'>>>>>>>>Calling fit() from Feature_Selector')
         #index=X.index
         self.y_train=y
         #print('\n********Inside fit() from Feature_Selector y_train length:', self.y_train.size)        
@@ -334,7 +336,7 @@ class Feature_Selector(BaseEstimator, TransformerMixin):
         return self
     
     def transform(self,X,y=None):
-        print('\n>>>>>>>>Calling transform() from Feature_Selector')
+        print('\n',time.ctime(),'>>>>>>>>Calling transform() from Feature_Selector')
         X_pruned=self.feat_sel.transform(X)
         return X_pruned
         

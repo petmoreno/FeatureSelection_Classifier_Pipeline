@@ -165,24 +165,25 @@ class Category_Cast_Column(BaseEstimator, TransformerMixin):
 
 
 
-def num_feat_cast(df, num_cat):
-    #Lets convert pcv,wc and rc dtype to float64 dtype and if any strange character appears it turns to NAN
-    # df['pcv']=pd.to_numeric(df['pcv'],errors='coerce')
-    # df['wc']=pd.to_numeric(df['wc'],errors='coerce')   
-    # df['rc']=pd.to_numeric(df['rc'],errors='coerce')
-    for i in range(len(num_cat)):
-        #df[i]=pd.to_numeric(df[i],errors='coerce')
-        df.loc[:,num_cat[i]]=pd.to_numeric(df.loc[:,num_cat[i]],errors='coerce')
-    return df
-
-def cat_feat_cast(df, cat_features):
-    #Lets convert rbc, pc, pcc, ba, htn, dm, cad, appet, pe, ane to category
-    #also features sg, al, su will be set to category
-    for i in range(len(cat_features)):
-        df.loc[:,cat_features[i]]=df.loc[:,cat_features[i]].astype('category')
-    #df.info() 
-    return df 
-
-def target_to_cat(df, target):
-    df.loc[:,target]=df.loc[:,target].astype('category')
-    return df
+class ageRounder(BaseEstimator, TransformerMixin):
+    def rounder (self,df):
+    #Some fetures content seems to have the character \t.
+    #Let's remove such character for the sake of consistency
+        print('\n>>>>>>>>Calling rounder')      
+        df['age']=np.around(df.loc[:,'age'])
+        return df
+    
+    def __init__(self):
+        print('\n>>>>>>>>Calling init() from ageRounder')
+            
+    def fit(self, X, y=None):
+        print('\n>>>>>>>>Calling fit() from ageRounder')
+        return self
+    
+    def transform(self,X,y=None):
+        print('\n>>>>>>>>Calling transform() from ageRounder')        
+        df=self.rounder(X)       
+        return df
+    
+    def fit_transform(self, X, y=None,):
+        return self.fit(X, y).transform(X, y)
