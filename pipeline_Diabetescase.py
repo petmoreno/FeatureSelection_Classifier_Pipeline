@@ -340,7 +340,6 @@ print('Accuracy of test set',accuracy_score(y_test, y_pred_clf_fpipe_b))
 full_parallel_pipe_optc=Pipeline([('data_prep',dataprep_merge_feat),('clf',dectree_clf)])
 
 full_parallel_pipe_optc.get_params().keys()
-# %%
 #%% Load the model saved to avoid a new fitting
 clf_fpipe_c= joblib.load(r'C:\Users\k5000751\OneDrive - Epedu O365\SeAMK\GitHub\FeatureSelection_Classifier_Pipeline\GridSearchCV_results\Diabetes_case\clf_fpipe_c.pkl')
 
