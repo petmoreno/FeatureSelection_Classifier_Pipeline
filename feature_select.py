@@ -266,7 +266,7 @@ class RidgeCV_FeatSel(BaseEstimator, TransformerMixin):
         
     def transform(self,X):
         print('\n',time.ctime(),'>>>>>>>>Calling transform() from RidgeCV_FeatSel')
-        coef = pd.Series(reg.coef_, index = X.columns)
+        coef = pd.Series(self.reg.coef_, index = X.columns)
         feat_sel=coef>=0
         X_pruned=X[feat_sel.index[feat_sel]]        
         return X_pruned
@@ -284,7 +284,7 @@ class Feature_Selector(BaseEstimator, TransformerMixin):
     #RidgeCV: performing RidgeCV valid for numeric/category input and category output
     
     #def __init__(self,y_train,strategy='wrapper_RFECV',k_out_features=5, rfe_estimator='LogisticRegression'):       
-    def __init__(self,strategy='wrapper_RFECV',k_out_features=5, rfe_estimator='LogisticRegression'):
+    def __init__(self,strategy='wrapper_RFE',k_out_features=1, rfe_estimator='LogisticRegression'):
         print('\n',time.ctime(),'>>>>>>>>Calling init() from Feature_Selector')
         
         #self.y_train=y_train
@@ -330,7 +330,7 @@ class Feature_Selector(BaseEstimator, TransformerMixin):
         #index=X.index
         self.y_train=y
         #print('\n********Inside fit() from Feature_Selector y_train length:', self.y_train.size)        
-        #print('\n********Calling fit() from Feature_Selector X length: ', X.shape[0])
+        print('\n',time.ctime(),'********Inside fit() from Feature_Selector - self.feat_sel: ', self.feat_sel)
         
         self.feat_sel.fit(X,self.y_train)
         return self

@@ -344,15 +344,15 @@ full_parallel_pipe_optc.get_params().keys()
 clf_fpipe_c= joblib.load(r'C:\Users\k5000751\OneDrive - Epedu O365\SeAMK\GitHub\FeatureSelection_Classifier_Pipeline\GridSearchCV_results\Diabetes_case\clf_fpipe_c.pkl')
 
 #%%
-# param_grid_fpipe_c={'clf':[dectree_clf, rndforest_clf, extratree_clf, ada_clf, xgboost_clf,gradboost_clf,voting_clf ],
+param_grid_fpipe_c={'clf':[dectree_clf, rndforest_clf, extratree_clf, ada_clf, xgboost_clf,gradboost_clf,voting_clf ],
+                     'data_prep__numeric_pipe__data_missing__strategy':['mean','median']
+                     }
+
+# param_grid_fpipe_c={'clf':[dectree_clf, rndforest_clf ],
 #                     'data_prep__numeric_pipe__data_missing__strategy':['mean','median']
 #                     }
 
-param_grid_fpipe_c={'clf':[dectree_clf, rndforest_clf ],
-                    'data_prep__numeric_pipe__data_missing__strategy':['mean','median']
-                    }
-
-clf_fpipe_c=GridSearchCV(full_parallel_pipe_optc,param_grid_fpipe_c,scoring=scoring,refit='accuracy', cv=5,n_jobs=-1)
+clf_fpipe_c=GridSearchCV(full_parallel_pipe_optc,param_grid_fpipe_c,scoring=scoring,refit='accuracy', cv=5,n_jobs=None)
 clf_fpipe_c.fit(X_train,y_train)
 
 # %%#%% Saving the model
@@ -386,3 +386,5 @@ test_results_y_pred_clf_fpipe_c=pd.DataFrame(data=test_results_clf_fpipe_c)
 test_results_y_pred_clf_fpipe_c.to_excel(r'C:\Users\k5000751\OneDrive - Epedu O365\SeAMK\GitHub\FeatureSelection_Classifier_Pipeline\GridSearchCV_results\Diabetes_case\test_results_y_pred_clf_fpipe_c.xlsx',index=False)
 print('Accuracy of test set',accuracy_score(y_test, y_pred_clf_fpipe_c))
 
+
+# %%
