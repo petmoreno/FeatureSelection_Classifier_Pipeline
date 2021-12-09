@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['..\\Heart_Failure_Predictor\\HF_SCIXAIpipeline_fullpaper.py']
+recent_files = ['..\\Chronic_Kidney_Disease_Predictor\\pipeline_CKDcase_explainability_MBEC.py']
 
